@@ -69,3 +69,7 @@ Källor:
 - Håll varje CLAUDE.md under 200 rader. Längre filer tar mer kontext och följs sämre.
 - Skills laddas bara när de används. Flytta specialinstruktioner dit.
 - MCP-servrar kostar kontext. Stäng av de som inte används, föredra CLI-verktyg.
+
+## Ultra (tillagt 2026-11-14)
+- Verifierade Ultra-konton har ingen femtimmarsgräns, bara en veckogräns. (support.claude.com, artikel 11145838, och claude.com/pricing)
+- Pro och Max har fortfarande både femtimmarsgräns och veckogräns.
