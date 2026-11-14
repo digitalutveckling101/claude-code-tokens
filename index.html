@@ -1214,12 +1214,13 @@
     <h2>Håll kontexten <em class="serif-italic">ren</em>.</h2>
     <p class="lead">Det här är vanan som gör störst skillnad, och den är lätt att lära sig. En session ska handla om en sak. När saken är klar börjar du om.</p>
 
-    <h3>Fem kommandon att kunna utantill</h3>
+    <h3>Sex kommandon att kunna utantill</h3>
     <table class="compare stack">
       <thead><tr><th>Kommando</th><th>Vad det gör</th><th>När du använder det</th></tr></thead>
       <tbody>
         <tr><td data-label="Kommando"><code>/clear</code></td><td data-label="Vad det gör">Startar en ny konversation med tom kontext.</td><td data-label="När du använder det">När du går över till något som inte hänger ihop med det du gjorde. Kostar ingenting.</td></tr>
         <tr><td data-label="Kommando"><code>/compact</code></td><td data-label="Vad det gör">Sammanfattar samtalet och frigör plats. Du kan skriva vad sammanfattningen ska fokusera på.</td><td data-label="När du använder det">När du vill fortsätta med samma sak men sessionen har blivit lång.</td></tr>
+        <tr><td data-label="Kommando"><code>/autocompact</code></td><td data-label="Vad det gör">Ställer in hur stor sessionen får bli innan den komprimeras automatiskt.</td><td data-label="När du använder det">När du vill att långa sessioner hålls mindre utan att du behöver tänka på det.</td></tr>
         <tr><td data-label="Kommando"><code>/context</code></td><td data-label="Vad det gör">Visar hur full kontexten är, som ett färgat rutnät, med förslag.</td><td data-label="När du använder det">När det känns trögt eller innan du ger dig in på något stort.</td></tr>
         <tr><td data-label="Kommando"><code>/rewind</code></td><td data-label="Vad det gör">Går tillbaka till en tidigare punkt, i samtalet och i koden. Dubbeltryck på Esc gör samma sak.</td><td data-label="När du använder det">När Claude har gått åt fel håll. Bättre än att rätta i tio meddelanden.</td></tr>
         <tr><td data-label="Kommando"><code>/btw</code></td><td data-label="Vad det gör">Ställer en sidofråga som inte läggs till i samtalet.</td><td data-label="När du använder det">När du undrar något snabbt och inte vill att det följer med resten av sessionen.</td></tr>
@@ -1241,6 +1242,14 @@
     <p>Båda gör sessionen mindre, men på olika sätt. <code>/compact</code> läser igenom hela samtalet för att kunna sammanfatta det, och det kostar. <code>/clear</code> kastar bara bort det gamla och kostar ingenting. Vill du fortsätta på samma sak: compact. Vill du börja på något nytt: clear.</p>
 
     <p>Du behöver inte vara rädd för att sessionen tar slut. Claude Code komprimerar automatiskt när kontexten närmar sig gränsen. Men då har du redan betalat för en lång och tung session i flera meddelanden. Det är billigare att vara före.</p>
+
+    <h3>Bestäm själv när den komprimerar</h3>
+    <p>Med <code>/autocompact</code> väljer du hur stor sessionen får bli innan den komprimeras automatiskt, någonstans mellan 100 000 och en miljon tokens. Utan inställning sker det först när modellens gräns närmar sig. För modeller med en miljon tokens i fönstret är det runt 967 000. Ett lägre värde gör att sessionen hålls mindre hela tiden, så att varje meddelande bär mindre bagage.</p>
+
+    <div class="prompt-box">
+      <div class="ph"><span>Komprimera tidigare</span><button type="button" class="copy" data-target="autoText">Kopiera</button></div>
+<pre id="autoText">/autocompact 300k</pre>
+    </div>
 
     <h3>Handoff: börja om utan att tappa något</h3>
     <p>Det enda skälet att stanna kvar i en lång session är rädslan för att Claude ska glömma vad ni har gjort. Lösningen är att låta Claude skriva ner det innan du börjar om. Då kan du starta en ny, lätt session som ändå vet allt som är viktigt.</p>
