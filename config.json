@@ -1,0 +1,51 @@
+{
+  "brandName": "Birgir Birgisson",
+  "colors": {
+    "primary": "#C66A2E",
+    "primaryLight": "#D97742",
+    "accent": "#A25B2A",
+    "highlight": "#E69068",
+    "secondary": "#3B1D1A",
+    "secondaryLight": "#6B5F52",
+    "background": "#F5EFE2",
+    "backgroundAlt": "#ECE3CE",
+    "backgroundSoft": "#FBF8F1",
+    "text": "#1A1713",
+    "textMuted": "#6B5F52",
+    "textFaint": "#8A7D6E",
+    "muted": "#6B5F52",
+    "border": "#D9D0BE",
+    "dark": "#1A1713"
+  },
+  "fonts": {
+    "heading": "Source Serif 4",
+    "headingWeight": 600,
+    "body": "Inter",
+    "code": "JetBrains Mono"
+  },
+  "theme": "light",
+  "outputDir": "./",
+  "referenceStylePage": null,
+  "brandFile": "BRAND.md",
+  "language": "sv",
+  "favicon": {
+    "required": true,
+    "file": "favicon.svg",
+    "spec": "Enkelt versalt K (för Kurs) i amber-600 (#C66A2E) på en mörk varm grå bakgrund (ink-800, #2A2520). Rundade hörn 12px. Source Serif 4 700 med Georgia/serif som fallback. Skriv som inline SVG, ingen extern font-laddning. Alltid namngiven favicon.svg och refererad i <head> via <link rel=\"icon\" type=\"image/svg+xml\" href=\"favicon.svg\" />.",
+    "background": "#2A2520",
+    "foreground": "#C66A2E",
+    "letter": "K"
+  },
+  "newsletter": {
+    "required": true,
+    "url": "https://veckobrev.birgir.se/",
+    "name": "Veckobrev om AI, etik och vibe coding",
+    "cadence": "Ett mejl i veckan",
+    "structure": [
+      "En personlig reflektion (om AI och om att vara människa samtidigt)",
+      "En konkret AI-insikt (något testat i veckan, ofta i Claude Code)",
+      "En 10-minuters mikroövning du kan göra direkt"
+    ],
+    "microcopy": "Under 5 minuters läsning. Inga skräpmejl. Du kan när som helst avregistrera dig."
+  }
+}

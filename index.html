@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#F5EFE2" />
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<title>Få tokens att räcka i Claude Code</title>
+<meta name="description" content="Gratis mini-kurs på svenska om hur du gör mer i Claude Code innan du slår i taket. Modellval, ren kontext, plan-läget, CLAUDE.md och subagenter. Sju moduler och ett quiz." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Få tokens att räcka i Claude Code" />
+<meta property="og:description" content="Gratis mini-kurs på svenska om hur du gör mer i Claude Code innan du slår i taket. Modellval, ren kontext, plan-läget, CLAUDE.md och subagenter. Sju moduler och ett quiz." />
+<meta property="og:locale" content="sv_SE" />
+<meta property="og:url" content="https://claude-code-tokens.vibecodingsverige.se/" />
+<meta property="og:image" content="https://claude-code-tokens.vibecodingsverige.se/bilder/og.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Få tokens att räcka i Claude Code. Gratis mini-kurs på svenska." />
+<link rel="canonical" href="https://claude-code-tokens.vibecodingsverige.se/" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Få tokens att räcka i Claude Code" />
+<meta name="twitter:image" content="https://claude-code-tokens.vibecodingsverige.se/bilder/og.jpg" />
+<meta name="twitter:description" content="Gratis mini-kurs på svenska om hur du gör mer i Claude Code innan du slår i taket. Modellval, ren kontext, plan-läget, CLAUDE.md och subagenter. Sju moduler och ett quiz." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream-50:  #FBF8F1;
+    --cream-100: #F5EFE2;
+    --cream-200: #ECE3CE;
+    --cream-300: #DED0AE;
+    --ink-900:   #1A1713;
+    --ink-800:   #2A2520;
+    --ink-700:   #3D362E;
+    --ink-500:   #6B5F52;
+    --ink-400:   #8A7D6E;
+    --ink-300:   #B8AD9E;
+    --ink-200:   #D9D0BE;
+    --amber-700: #A25B2A;
+    --amber-600: #C66A2E;
+    --amber-500: #D97742;
+    --amber-400: #E69068;
+    --amber-100: #F5D7BF;
+    --amber-50:  #FBEEE1;
+    --plum-700:  #3B1D1A;
+
+    --serif: "Source Serif 4", Georgia, serif;
+    --sans:  "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --mono:  "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+
+    --r-sm: 6px;
+    --r-md: 10px;
+    --r-lg: 16px;
+    --r-xl: 24px;
+
+    --shadow-sm: 0 1px 2px rgba(26,23,19,0.06), 0 1px 1px rgba(26,23,19,0.04);
+    --shadow-md: 0 4px 16px rgba(26,23,19,0.08), 0 2px 4px rgba(26,23,19,0.04);
+    --shadow-lg: 0 20px 60px rgba(26,23,19,0.12), 0 8px 20px rgba(26,23,19,0.06);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--cream-100);
+    color: var(--ink-900);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .serif-italic {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    color: var(--amber-700);
+  }
+
+  .container { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+  .container-narrow { max-width: 760px; margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 720px) {
+    .container, .container-narrow { padding: 0 22px; }
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--amber-600), var(--amber-700));
+    z-index: 1000;
+    transition: width 0.1s ease-out;
+  }
+
+  /* Topbar */
+  .topbar {
+    position: sticky;
+    top: 0;
+    background: rgba(245, 239, 226, 0.85);
+    backdrop-filter: saturate(180%) blur(12px);
+    -webkit-backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--ink-200);
+    z-index: 100;
+  }
+  .topbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ink-900);
+    text-decoration: none;
+  }
+  .brand-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--amber-600);
+  }
+  .module-nav {
+    display: flex;
+    gap: 4px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .module-nav a {
+    color: var(--ink-500);
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: var(--r-sm);
+    transition: all 0.15s ease;
+  }
+  .module-nav a:hover { color: var(--ink-900); background: var(--cream-200); }
+  .module-nav a.active { color: var(--amber-700); background: var(--amber-50); }
+  @media (max-width: 1000px) {
+    .module-nav { display: none; }
+  }
+
+  /* Hero */
+  .hero {
+    padding: 96px 0 64px;
+    background: var(--cream-100);
+    border-bottom: 1px solid var(--ink-200);
+  }
+  @media (max-width: 720px) {
+    .hero { padding: 64px 0 48px; }
+  }
+  .badge {
+    display: inline-block;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--amber-700);
+    background: var(--amber-50);
+    padding: 6px 12px;
+    border-radius: var(--r-sm);
+    margin-bottom: 20px;
+  }
+  h1.hero-title {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(40px, 5.6vw, 68px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0 0 20px;
+    max-width: 900px;
+  }
+  .hero-sub {
+    font-family: var(--sans);
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink-500);
+    max-width: 640px;
+    margin: 0 0 28px;
+  }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-500);
+    margin-bottom: 32px;
+  }
+  .hero-meta span { display: flex; align-items: center; }
+  .hero-meta span + span::before {
+    content: "·";
+    margin: 0 14px 0 0;
+    color: var(--ink-300);
+  }
+  .module-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 48px;
+  }
+  .module-tags a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--cream-50);
+    border: 1px solid var(--ink-200);
+    border-radius: 999px;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-900);
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+  .module-tags a:hover {
+    border-color: var(--amber-600);
+    background: var(--amber-50);
+    color: var(--amber-700);
+  }
+  .module-tags a .num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--amber-700);
+    font-weight: 600;
+  }
+
+  .hero-frame {
+    margin-top: 32px;
+    background: var(--cream-50);
+    border: 1px solid var(--ink-200);
+    border-radius: var(--r-xl);
+    padding: 28px;
+    box-shadow: var(--shadow-md);
+    max-width: 900px;
+  }
+  .frame-dotrow {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+  .frame-dotrow span {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--ink-300);
+  }
+  .frame-dotrow span:nth-child(1) { background: #E66E5C; }
+  .frame-dotrow span:nth-child(2) { background: #E6B85C; }
+  .frame-dotrow span:nth-child(3) { background: #82C788; }
+  .frame-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+  @media (max-width: 720px) {
+    .frame-content { grid-template-columns: 1fr; }
+  }
+  .frame-files {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-500);
+    line-height: 1.9;
+  }
+  .frame-files .filename { color: var(--ink-400); text-decoration: line-through; }
+  .frame-files .arrow { color: var(--amber-600); font-weight: 600; margin: 0 6px; }
+  .frame-files .new { color: var(--ink-900); font-weight: 500; }
+  .frame-illust {
+    background: var(--cream-100);
+    border-radius: var(--r-lg);
+    padding: 32px 24px;
+    text-align: center;
+    border: 1px solid var(--ink-200);
+  }
+  .frame-illust .num {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 56px;
+    color: var(--amber-600);
+    line-height: 1;
+  }
+  .frame-illust .label {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-500);
+    margin-top: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .accent-bar {
+    width: 120px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--amber-600), var(--amber-700));
+    border-radius: 2px;
+    margin-top: 40px;
+  }
+
+  /* Module sections */
+  .module {
+    padding: 96px 0;
+    background: var(--cream-100);
+    border-top: 1px solid var(--ink-200);
+  }
+  .module.alt { background: var(--cream-200); }
+  @media (max-width: 720px) {
+    .module { padding: 64px 0; }
+  }
+  .section-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--amber-700);
+    margin-bottom: 14px;
+  }
+  .module h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(32px, 4vw, 40px);
+    line-height: 1.15;
+    margin: 0 0 24px;
+    letter-spacing: -0.01em;
+  }
+  .lead {
+    font-family: var(--sans);
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink-700);
+    margin: 0 0 32px;
+  }
+  .module p { color: var(--ink-700); }
+  .module h3 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1.3;
+    margin: 36px 0 14px;
+    color: var(--ink-900);
+  }
+
+  /* Bullet lists with checkmark circles */
+  .check-list {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0;
+  }
+  .check-list li {
+    position: relative;
+    padding-left: 36px;
+    margin-bottom: 14px;
+    line-height: 1.55;
+    color: var(--ink-700);
+  }
+  .check-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--amber-100) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A25B2A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>") center/12px no-repeat;
+  }
+
+  /* Callouts */
+  .callout {
+    background: linear-gradient(180deg, var(--amber-50) 0%, var(--cream-50) 100%);
+    border-left: 4px solid var(--amber-600);
+    padding: 24px 28px;
+    border-radius: 0 var(--r-lg) var(--r-lg) 0;
+    margin: 32px 0;
+  }
+  .callout .label {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--amber-700);
+    margin-bottom: 8px;
+  }
+  .callout p { margin: 0; color: var(--ink-900); }
+
+  .callout.dark {
+    background: var(--ink-900);
+    border-left-color: var(--amber-600);
+    color: var(--cream-100);
+  }
+  .callout.dark .label { color: var(--amber-400); }
+  .callout.dark p { color: var(--cream-100); }
+
+  /* Numbered cards */
+  .qcards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+    margin: 32px 0;
+  }
+  .qcard {
+    background: var(--cream-50);
+    border: 1px solid var(--ink-200);
+    border-radius: var(--r-lg);
+    padding: 24px 22px;
+    transition: all 0.2s ease;
+  }
+  .qcard:hover {
+    border-color: var(--amber-400);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .qcard .num {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--amber-700);
+    margin-bottom: 10px;
+  }
+  .qcard h4 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.3;
+    margin: 0 0 8px;
+    color: var(--ink-900);
+  }
+  .qcard p {
+    font-size: 15px;
+    color: var(--ink-500);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Step list */
+  .step-list {
+    list-style: none;
+    padding: 0;
+    margin: 32px 0;
+    counter-reset: step;
+  }
+  .step-list li {
+    display: flex;
+    gap: 18px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--ink-200);
+  }
+  .step-list li:last-child { border-bottom: none; }
+  .step-list li::before {
+    counter-increment: step;
+    content: "0" counter(step);
+    flex: 0 0 auto;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--amber-700);
+    background: var(--amber-50);
+    padding: 4px 10px;
+    border-radius: var(--r-sm);
+    height: fit-content;
+    margin-top: 2px;
+  }
+  .step-list li > div { flex: 1; }
+  .step-list h4 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 18px;
+    margin: 0 0 6px;
+    color: var(--ink-900);
+  }
+  .step-list p {
+    margin: 0;
+    color: var(--ink-700);
+  }
+
+  /* Accordions */
+  details.acc {
+    background: var(--cream-50);
+    border: 1px solid var(--ink-200);
+    border-radius: var(--r-lg);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  details.acc summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 18px 22px;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--ink-900);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  details.acc summary::-webkit-details-marker { display: none; }
+  details.acc summary::after {
+    content: "+";
+    font-family: var(--mono);
+    font-size: 20px;
+    color: var(--amber-600);
+    transition: transform 0.2s ease;
+  }
+  details.acc[open] summary::after { content: "−"; }
+  details.acc .acc-body {
+    padding: 0 22px 22px;
+    color: var(--ink-700);
+  }
+  details.acc .acc-body p:first-child { margin-top: 0; }
+
+  /* Comparison table */
+  table.compare {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    background: var(--cream-50);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    border: 1px solid var(--ink-200);
+  }
+  table.compare th, table.compare td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid var(--ink-200);
+    font-size: 15px;
+  }
+  table.compare th {
+    background: var(--cream-200);
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-700);
+  }
+  table.compare tr:last-child td { border-bottom: none; }
+  table.compare td.good { color: var(--amber-700); font-weight: 500; }
+  table.compare td.bad  { color: var(--ink-500); }
+
+  /* Before/after panels */
+  .ba {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin: 32px 0;
+  }
+  @media (max-width: 720px) { .ba { grid-template-columns: 1fr; } }
+  .ba > div {
+    padding: 22px;
+    border-radius: var(--r-lg);
+    border: 1px solid var(--ink-200);
+  }
+  .ba .before { background: var(--cream-50); }
+  .ba .after  { background: var(--amber-50); border-color: var(--amber-100); }
+  .ba .label {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    margin-bottom: 8px;
+  }
+  .ba .before .label { color: var(--ink-500); }
+  .ba .after  .label { color: var(--amber-700); }
+  .ba code {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-900);
+    display: block;
+    line-height: 1.7;
+  }
+
+  /* Quiz */
+  .quiz-section {
+    padding: 96px 0;
+    background: var(--cream-200);
+    border-top: 1px solid var(--ink-200);
+  }
+  @media (max-width: 720px) {
+    .quiz-section { padding: 64px 0; }
+  }
+  .quiz {
+    background: var(--cream-50);
+    border: 1px solid var(--ink-200);
+    border-radius: var(--r-xl);
+    padding: 36px;
+    margin-top: 32px;
+    box-shadow: var(--shadow-sm);
+  }
+  @media (max-width: 720px) {
+    .quiz { padding: 24px; }
+  }
+  .qq { margin-bottom: 32px; }
+  .qq:last-child { margin-bottom: 0; }
+  .qq-num {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--amber-700);
+    margin-bottom: 8px;
+  }
+  .qq h3 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 22px;
+    margin: 0 0 18px;
+    color: var(--ink-900);
+  }
+  .qopts { display: flex; flex-direction: column; gap: 10px; }
+  .qopt {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--cream-100);
+    border: 1px solid var(--ink-200);
+    border-radius: var(--r-md);
+    cursor: pointer;
+    font-size: 15px;
+    color: var(--ink-900);
+    transition: all 0.15s ease;
+    text-align: left;
+    font-family: var(--sans);
+    width: 100%;
+  }
+  .qopt:hover { border-color: var(--amber-600); background: var(--amber-50); }
+  .qopt.correct {
+    background: #E8F1E4;
+    border-color: #82C788;
+    color: #2A4A2C;
+  }
+  .qopt.wrong {
+    background: #F5E1DC;
+    border-color: #D97D6E;
+    color: #6B2A22;
+  }
+  .qopt:disabled { cursor: default; }
+  .qfeedback {
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: var(--cream-100);
+    border-left: 3px solid var(--amber-600);
+    border-radius: 0 var(--r-md) var(--r-md) 0;
+    font-size: 14px;
+    color: var(--ink-700);
+    display: none;
+  }
+  .qfeedback.show { display: block; }
+  .quiz-score {
+    margin-top: 32px;
+    padding: 22px;
+    background: var(--ink-900);
+    color: var(--cream-100);
+    border-radius: var(--r-lg);
+    text-align: center;
+    display: none;
+  }
+  .quiz-score.show { display: block; }
+  .quiz-score .num {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 40px;
+    color: var(--amber-400);
+    margin: 0;
+  }
+  .quiz-score p { margin: 6px 0 0; color: var(--cream-100); font-size: 16px; }
+
+  /* End section */
+  .end {
+    background: var(--ink-900);
+    color: var(--cream-100);
+    padding: 96px 0;
+    border-top: 1px solid var(--ink-700);
+  }
+  @media (max-width: 720px) {
+    .end { padding: 64px 0; }
+  }
+  .end .section-label { color: var(--amber-400); }
+  .end h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(32px, 4.4vw, 44px);
+    line-height: 1.15;
+    color: var(--cream-100);
+    margin: 0 0 18px;
+    letter-spacing: -0.01em;
+  }
+  .end .lead { color: var(--ink-300); margin-bottom: 40px; }
+
+  /* Gå vidare: boken + startkit */
+  .next-steps { margin: 0 0 56px; }
+  .next-steps .section-label { margin-bottom: 10px; }
+  .next-steps h3 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(26px, 3.4vw, 34px);
+    line-height: 1.2;
+    color: var(--cream-100);
+    margin: 0 0 12px;
+  }
+  .next-steps .intro { color: var(--ink-300); font-size: 17px; line-height: 1.55; margin: 0 0 28px; }
+  .offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 720px) { .offer-grid { grid-template-columns: 1fr; } }
+  .offer {
+    display: flex; flex-direction: column;
+    background: var(--cream-50); color: var(--ink-900);
+    border-radius: var(--r-xl); padding: 30px 28px;
+    box-shadow: var(--shadow-lg);
+  }
+  .offer.warm { background: var(--amber-50); }
+  .offer .ico {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: var(--amber-100); color: var(--amber-700);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .offer .kicker {
+    font-family: var(--mono); font-size: 11px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--ink-500); margin: 18px 0 6px;
+  }
+  .offer.warm .kicker { color: var(--amber-700); }
+  .offer h4 {
+    font-family: var(--serif); font-weight: 600; font-size: 23px;
+    line-height: 1.25; margin: 0 0 10px; color: var(--ink-900);
+  }
+  .offer p { flex: 1; font-size: 15px; line-height: 1.6; color: var(--ink-700); margin: 0 0 22px; }
+  .offer .btn { align-self: flex-start; }
+
+  .news-card {
+    background: var(--cream-50);
+    color: var(--ink-900);
+    border-radius: var(--r-xl);
+    padding: 40px 36px;
+    box-shadow: var(--shadow-lg);
+  }
+  @media (max-width: 720px) {
+    .news-card { padding: 28px 24px; }
+  }
+  .news-card .eyebrow {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--amber-700);
+    margin-bottom: 14px;
+  }
+  .news-card h3 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(24px, 3vw, 30px);
+    line-height: 1.25;
+    margin: 0 0 14px;
+    color: var(--ink-900);
+  }
+  .news-card .desc {
+    font-size: 16px;
+    color: var(--ink-500);
+    margin: 0 0 22px;
+    line-height: 1.55;
+  }
+  .news-card .check-list { margin: 0 0 28px; }
+  .news-card .check-list li { color: var(--ink-700); font-size: 15px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 16px;
+    padding: 16px 26px;
+    border-radius: var(--r-md);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s ease;
+    border: none;
+  }
+  .btn-amber {
+    background: var(--amber-600);
+    color: #fff;
+    box-shadow: 0 10px 30px -8px rgba(198,106,46,0.55);
+  }
+  .btn-amber:hover { background: var(--amber-700); }
+  .micro {
+    font-size: 13px;
+    color: var(--ink-500);
+    margin: 14px 0 0;
+  }
+
+  /* Footer */
+  footer {
+    background: var(--cream-200);
+    color: var(--ink-500);
+    padding: 32px 0;
+    text-align: center;
+    font-size: 14px;
+    border-top: 1px solid var(--ink-200);
+  }
+
+  /* Reveal animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---------- tillägg för den här kursen: bildmaterial ---------- */
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 56px; align-items: center; }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; gap: 36px; } }
+  .phone {
+    position: relative; width: 100%; max-width: 280px; aspect-ratio: 9 / 16; margin: 0 auto;
+    border: 9px solid var(--ink-900); border-radius: 38px; overflow: hidden;
+    background: var(--ink-900); box-shadow: var(--shadow-md);
+  }
+  .phone video, .phone img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .phone-cap { text-align: center; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-400); margin-top: 14px; }
+
+  figure.fig { margin: 36px 0; }
+  figure.fig figcaption { font-family: var(--sans); font-size: 13.5px; line-height: 1.5; color: var(--ink-500); margin-top: 12px; }
+  figure.fig figcaption strong { color: var(--ink-900); font-weight: 600; }
+  .fig-card { background: var(--cream-50); border: 1px solid var(--ink-200); border-radius: var(--r-lg); padding: 24px; }
+  .module.alt .fig-card { background: var(--cream-100); }
+  .fig-card svg { display: block; width: 100%; height: auto; }
+
+  .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .flow-step { position: relative; background: var(--cream-100); border: 1px solid var(--ink-200); border-radius: var(--r-md); padding: 16px 14px; }
+  .module.alt .flow-step { background: var(--cream-50); }
+  .flow-step .n { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--amber-700); letter-spacing: 0.1em; }
+  .flow-step h4 { font-family: var(--serif); font-weight: 600; font-size: 17px; margin: 6px 0 4px; }
+  .flow-step p { font-size: 13px; line-height: 1.45; color: var(--ink-500); margin: 0; }
+  .flow-step.last { background: var(--ink-900); border-color: var(--ink-900); }
+  .flow-step.last h4 { color: var(--cream-100); }
+  .flow-step.last p { color: var(--ink-300); }
+  .flow-step.last .n { color: var(--amber-400); }
+  @media (max-width: 820px) { .flow { grid-template-columns: 1fr 1fr; } }
+
+  .before-after { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 20px; align-items: center; }
+  .before-after .shot { border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--ink-200); }
+  .before-after .shot img { display: block; width: 100%; height: auto; }
+  .tagline { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-500); margin: 0 0 8px; }
+  .tagline.amber { color: var(--amber-700); }
+  @media (max-width: 720px) { .before-after { grid-template-columns: 1fr; } }
+
+  .gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .gallery.three { grid-template-columns: repeat(3, 1fr); }
+  .gallery .g { margin: 0; }
+  .gallery .g .phone { border-width: 6px; border-radius: 24px; max-width: none; }
+  .gallery .g p { font-size: 12.5px; line-height: 1.4; color: var(--ink-500); margin: 10px 2px 0; }
+  .gallery .g p strong { display: block; color: var(--ink-900); font-weight: 600; font-size: 13px; }
+  @media (max-width: 720px) { .gallery, .gallery.three { grid-template-columns: 1fr 1fr; } }
+
+  .prompt-box { position: relative; background: var(--ink-900); border-radius: var(--r-lg); padding: 26px 26px 22px; margin: 28px 0; }
+  .prompt-box .ph { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .prompt-box .ph span { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber-400); }
+  .prompt-box button { font-family: var(--sans); font-size: 12.5px; font-weight: 600; color: var(--ink-900); background: var(--cream-100); border: 0; border-radius: 999px; padding: 7px 14px; cursor: pointer; transition: background 0.15s ease; }
+  .prompt-box button:hover { background: var(--amber-100); }
+  .prompt-box pre { margin: 0; white-space: pre-wrap; font-family: var(--mono); font-size: 13px; line-height: 1.65; color: var(--cream-100); }
+
+  .chat { display: flex; flex-direction: column; gap: 12px; }
+  .chat .msg { max-width: 82%; padding: 14px 18px; border-radius: 18px; font-size: 14.5px; line-height: 1.5; }
+  .chat .you { align-self: flex-end; background: var(--ink-900); color: var(--cream-100); border-bottom-right-radius: 5px; }
+  .chat .ai { align-self: flex-start; background: var(--cream-200); color: var(--ink-900); border-bottom-left-radius: 5px; }
+  .module.alt .chat .ai { background: var(--cream-50); }
+  .chat .who { display: block; font-family: var(--mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.6; margin-bottom: 4px; }
+  .rule-card { margin-top: 16px; border: 1px dashed var(--amber-600); border-radius: var(--r-md); padding: 16px 18px; background: var(--amber-50); font-family: var(--mono); font-size: 13px; line-height: 1.6; color: var(--ink-800); }
+  .rule-card b { color: var(--amber-700); }
+  .qcards.three { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 720px) { .qcards.three { grid-template-columns: 1fr; } }
+  .hero-tools { font-family: var(--sans); font-size: 15px; line-height: 1.55; color: var(--ink-700); background: var(--amber-50); border-left: 3px solid var(--amber-600); border-radius: var(--r-sm); padding: 12px 16px; max-width: 640px; margin: 0 0 28px; }
+  .hero-tools strong { color: var(--ink-900); }
+  .svg-lab { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; }
+  .svg-txt { font-family: "Inter", system-ui, sans-serif; font-size: 13px; }
+
+  /* Hero: användningsmätare */
+  .meter-card {
+    background: var(--ink-900); color: var(--cream-100);
+    border-radius: var(--r-xl); padding: 26px 24px; box-shadow: var(--shadow-lg);
+    font-family: var(--sans);
+  }
+  .mc-title { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber-400); margin: 0 0 18px; }
+  .mc-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-300); margin: 0 0 6px; }
+  .mc-row span:last-child { font-family: var(--mono); color: var(--cream-100); }
+  .mc-bar { height: 10px; border-radius: 6px; background: var(--ink-700); overflow: hidden; margin: 0 0 18px; }
+  .mc-bar i { display: block; height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--amber-500), var(--amber-600)); }
+  .mc-bar i.calm { background: var(--amber-400); opacity: 0.75; }
+  .mc-warn { font-size: 13px; line-height: 1.5; color: var(--ink-200); border-left: 3px solid var(--amber-500); padding: 2px 0 2px 12px; margin: 4px 0 18px; }
+  .mc-cmd { font-family: var(--mono); font-size: 14px; background: var(--ink-800); border-radius: 8px; padding: 10px 14px; color: var(--cream-100); }
+  .mc-cmd span { color: var(--amber-400); margin-right: 6px; }
+
+  /* Modul 03: modelltrappa */
+  .model-ladder { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; align-items: end; }
+  .ml-step { border-radius: 14px; padding: 16px 14px; color: var(--ink-900); display: flex; flex-direction: column; justify-content: flex-end; }
+  .ml-step.s1 { background: var(--cream-200); min-height: 130px; }
+  .ml-step.s2 { background: var(--amber-100); min-height: 165px; }
+  .ml-step.s3 { background: var(--amber-400); min-height: 200px; }
+  .ml-step.s4 { background: var(--amber-600); min-height: 235px; color: #fff; }
+  .ml-name { font-family: var(--serif); font-weight: 600; font-size: 22px; margin: 0 0 4px; }
+  .ml-alias { font-family: var(--mono); font-size: 11.5px; margin: 0 0 8px; opacity: 0.8; }
+  .ml-use { font-size: 13px; line-height: 1.45; margin: 0; }
+  .ml-axis { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-500); margin-top: 14px; border-top: 1px solid var(--ink-200); padding-top: 10px; }
+  @media (max-width: 720px) {
+    .model-ladder { grid-template-columns: 1fr 1fr; }
+    .ml-step { min-height: 0 !important; }
+  }
+
+  /* Modul 04: handoff */
+  .handoff { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 12px; align-items: stretch; }
+  .ho-box { border-radius: 14px; padding: 18px 16px; font-size: 14px; line-height: 1.5; }
+  .ho-box p { margin: 0; }
+  .ho-lab { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px !important; }
+  .ho-box.heavy { background: var(--ink-800); color: var(--ink-200); }
+  .fig .ho-box.heavy p { color: var(--ink-200); }
+  .fig .ho-box.doc p, .fig .ho-box.light p { color: var(--ink-700); }
+  .fig .ho-box p.ho-lab { color: var(--amber-700); }
+  .fig .ho-box.heavy p.ho-lab { color: var(--amber-400); }
+  .ho-box.heavy .ho-lab { color: var(--amber-400); }
+  .ho-box.doc { background: var(--amber-50); border: 1px dashed var(--amber-600); color: var(--ink-700); }
+  .ho-box.doc .ho-lab { color: var(--amber-700); }
+  .ho-box.light { background: var(--cream-50); border: 1px solid var(--ink-200); color: var(--ink-700); }
+  .ho-box.light .ho-lab { color: var(--amber-700); }
+  .ho-arrow { align-self: center; font-size: 22px; color: var(--amber-600); }
+  @media (max-width: 720px) {
+    .handoff { grid-template-columns: 1fr; }
+    .ho-arrow { transform: rotate(90deg); justify-self: center; }
+  }
+
+  /* Modul 06: vad som laddas */
+  .load-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 720px) { .load-compare { grid-template-columns: 1fr; } }
+  .lc-lab { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber-700); margin: 0 0 10px; }
+  .lc-item { border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; font-size: 14px; line-height: 1.45; }
+  .lc-item b { display: block; font-family: var(--serif); font-size: 17px; margin-bottom: 2px; }
+  .lc-item span { color: inherit; opacity: 0.85; }
+  .lc-item.always { background: var(--ink-800); color: var(--cream-100); }
+  .lc-item.ondemand { background: var(--cream-50); border: 1px dashed var(--ink-300); color: var(--ink-700); }
+
+  /* Tabeller som kort på mobil */
+  @media (max-width: 720px) {
+    table.compare.stack thead { display: none; }
+    table.compare.stack, table.compare.stack tbody, table.compare.stack tr, table.compare.stack td { display: block; width: 100%; }
+    table.compare.stack tr { border-bottom: 1px solid var(--ink-200); padding: 10px 0; }
+    table.compare.stack td { border: 0; padding: 4px 14px; }
+    table.compare.stack td::before { content: attr(data-label); display: block; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber-700); margin-bottom: 2px; }
+  }
+
+  /* Diagram: läsbara på mobil, svep i sidled */
+  @media (max-width: 720px) {
+    .fig-card:has(> svg) { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .fig-card > svg { min-width: 600px; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="topbar">
+  <div class="container topbar-inner">
+    <a href="#top" class="brand">
+      <span class="brand-dot"></span>
+      Birgir Birgisson
+    </a>
+    <nav class="module-nav" aria-label="Moduler">
+      <a href="#mod1">01 Varför</a>
+      <a href="#mod2">02 Gränser</a>
+      <a href="#mod3">03 Modell</a>
+      <a href="#mod4">04 Kontext</a>
+      <a href="#mod5">05 Plan</a>
+      <a href="#mod6">06 CLAUDE.md</a>
+      <a href="#mod7">07 Stora jobb</a>
+      <a href="#quiz">Quiz</a>
+    </nav>
+  </div>
+</div>
+
+<section class="hero" id="top">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <span class="badge">Mini-kurs på svenska</span>
+        <h1 class="hero-title">Få tokens att <em class="serif-italic">räcka</em> i Claude Code.</h1>
+        <p class="hero-sub">Du gillar Claude Code, men plötsligt står det att gränsen är nådd och du får vänta i flera timmar. Det beror sällan på hur mycket du gör. Det beror på hur du gör det. Sju vanor som låter dig bygga mer innan du slår i taket.</p>
+        <p class="hero-tools"><strong>För vem:</strong> dig som kör Claude Code på ett Pro- eller Max-abonnemang. Inga förkunskaper i kod behövs. Allt i kursen bygger på Anthropics egen dokumentation.</p>
+        <div class="hero-meta">
+          <span>7 moduler</span>
+          <span>~25 min</span>
+          <span>FRI</span>
+        </div>
+        <div class="module-tags">
+          <a href="#mod1"><span class="num">01</span>Varför det tar slut</a>
+          <a href="#mod2"><span class="num">02</span>Så fungerar gränserna</a>
+          <a href="#mod3"><span class="num">03</span>Rätt modell</a>
+          <a href="#mod4"><span class="num">04</span>Håll kontexten ren</a>
+          <a href="#mod5"><span class="num">05</span>Planera först</a>
+          <a href="#mod6"><span class="num">06</span>CLAUDE.md och skills</a>
+          <a href="#mod7"><span class="num">07</span>Stora jobb</a>
+        </div>
+      </div>
+      <div>
+        <div class="meter-card" aria-label="Exempel på en användningsmätare">
+          <p class="mc-title">Användning</p>
+          <div class="mc-row"><span>Femtimmarsfönster</span><span>82 %</span></div>
+          <div class="mc-bar"><i style="width:82%"></i></div>
+          <div class="mc-row"><span>Veckogräns</span><span>46 %</span></div>
+          <div class="mc-bar"><i class="calm" style="width:46%"></i></div>
+          <div class="mc-warn">Snart slut. Det här är mätaren du vill hålla lugn.</div>
+          <div class="mc-cmd"><span>&gt;</span> /usage</div>
+        </div>
+        <p class="phone-cap">Illustration, inte en skärmbild</p>
+      </div>
+    </div>
+    <div class="accent-bar"></div>
+  </div>
+</section>
+
+<!-- MODUL 01 -->
+<section class="module reveal" id="mod1">
+  <div class="container-narrow">
+    <p class="section-label">Modul 01</p>
+    <h2>Varför det <em class="serif-italic">tar slut</em>.</h2>
+    <p class="lead">Det mesta i den här kursen följer av en enda sak: Claude Code skickar med hela konversationen varje gång du skriver något. Förstår du det förstår du också varför vissa sessioner äter upp allt.</p>
+
+    <p>En token är en bit text, ungefär ett halvt ord. Allt Claude läser och skriver räknas i tokens: dina meddelanden, svaren, filerna den öppnar, resultaten från kommandon och instruktionerna i projektet. Det som lätt glöms bort är att Claude inte minns något mellan två meddelanden. För att kunna svara skickas hela samtalet med, från första raden.</p>
+
+    <figure class="fig">
+      <div class="fig-card">
+        <svg viewBox="0 0 720 270" role="img" aria-label="Diagram: samma korta fråga kostar allt mer ju längre sessionen har pågått, eftersom hela samtalet skickas med.">
+          <text x="20" y="24" class="svg-lab" fill="#A25B2A">VAD SOM SKICKAS NÄR DU STÄLLER EN KORT FRÅGA</text>
+          <g>
+            <text x="20" y="72" class="svg-txt" fill="#3D362E">Meddelande 1</text>
+            <rect x="150" y="56" width="22" height="24" rx="5" fill="#C66A2E"/>
+            <text x="20" y="122" class="svg-txt" fill="#3D362E">Meddelande 10</text>
+            <rect x="150" y="106" width="150" height="24" rx="5" fill="#E69068"/>
+            <rect x="300" y="106" width="22" height="24" rx="5" fill="#C66A2E"/>
+            <text x="20" y="172" class="svg-txt" fill="#3D362E">Meddelande 40</text>
+            <rect x="150" y="156" width="430" height="24" rx="5" fill="#E69068"/>
+            <rect x="580" y="156" width="22" height="24" rx="5" fill="#C66A2E"/>
+          </g>
+          <rect x="150" y="214" width="16" height="16" rx="4" fill="#C66A2E"/>
+          <text x="174" y="227" class="svg-txt" fill="#3D362E">Din nya fråga</text>
+          <rect x="300" y="214" width="16" height="16" rx="4" fill="#E69068"/>
+          <text x="324" y="227" class="svg-txt" fill="#3D362E">Allt som redan har sagts, filer och resultat</text>
+        </svg>
+      </div>
+      <figcaption><strong>Samma fråga, olika pris.</strong> Den korta frågan är lika stor varje gång. Det som växer är allt som följer med den.</figcaption>
+    </figure>
+
+    <div class="callout dark">
+      <p class="label">Nyckelinsikt</p>
+      <p>En enradsfråga i en session som har varit öppen hela dagen drar användning för hela dagens samtal. Det är inte din fråga som kostar. Det är sällskapet den har med sig.</p>
+    </div>
+
+    <h3>Tre saker som får sessionen att växa snabbt</h3>
+    <ul class="check-list">
+      <li><strong>Stora filer och långa utskrifter.</strong> När Claude läser en hel fil eller kör ett kommando som spottar ut hundratals rader hamnar allt i samtalet och följer sedan med.</li>
+      <li><strong>Att blanda uppgifter.</strong> Du fixar en knapp, frågar om en text och bygger en ny sida i samma session. Allt det gamla följer med in i det nya, fast det inte behövs.</li>
+      <li><strong>Djupt tänkande på enkla frågor.</strong> De största modellerna tänker länge innan de svarar, och tänkandet räknas också. Mer om det i modul 03.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- MODUL 02 -->
+<section class="module alt reveal" id="mod2">
+  <div class="container-narrow">
+    <p class="section-label">Modul 02</p>
+    <h2>Så fungerar <em class="serif-italic">gränserna</em>.</h2>
+    <p class="lead">På Pro och Max betalar du inte per token. Du har en pott som fylls på med jämna mellanrum. Att veta hur den fungerar gör att du kan planera, i stället för att bli överraskad.</p>
+
+    <figure class="fig">
+      <div class="fig-card">
+        <svg viewBox="0 0 720 250" role="img" aria-label="Diagram: Claude-chatten och Claude Code drar från samma pott, som har en femtimmarsgräns och en veckogräns.">
+          <rect x="20" y="40" width="190" height="64" rx="12" fill="#FBF8F1" stroke="#D9D0BE"/>
+          <text x="115" y="68" text-anchor="middle" class="svg-lab" fill="#A25B2A">CLAUDE-CHATTEN</text>
+          <text x="115" y="88" text-anchor="middle" class="svg-txt" fill="#6B5F52">claude.ai och appen</text>
+          <rect x="20" y="146" width="190" height="64" rx="12" fill="#FBF8F1" stroke="#D9D0BE"/>
+          <text x="115" y="174" text-anchor="middle" class="svg-lab" fill="#A25B2A">CLAUDE CODE</text>
+          <text x="115" y="194" text-anchor="middle" class="svg-txt" fill="#6B5F52">terminal och desktop</text>
+          <path d="M214 72 C 280 72, 280 125, 330 125" fill="none" stroke="#C66A2E" stroke-width="3"/>
+          <path d="M214 178 C 280 178, 280 125, 330 125" fill="none" stroke="#C66A2E" stroke-width="3"/>
+          <rect x="334" y="70" width="170" height="110" rx="16" fill="#C66A2E"/>
+          <text x="419" y="118" text-anchor="middle" class="svg-lab" fill="#FFFFFF">SAMMA POTT</text>
+          <text x="419" y="140" text-anchor="middle" class="svg-txt" fill="#FBEEE1">allt räknas här</text>
+          <rect x="540" y="56" width="160" height="56" rx="12" fill="#1A1713"/>
+          <text x="620" y="80" text-anchor="middle" class="svg-lab" fill="#E69068">FEMTIMMARSFÖNSTER</text>
+          <text x="620" y="99" text-anchor="middle" class="svg-txt" fill="#F5EFE2">fylls på efter fönstret</text>
+          <rect x="540" y="140" width="160" height="56" rx="12" fill="#1A1713"/>
+          <text x="620" y="164" text-anchor="middle" class="svg-lab" fill="#E69068">VECKOGRÄNS</text>
+          <text x="620" y="183" text-anchor="middle" class="svg-txt" fill="#F5EFE2">taket för hela veckan</text>
+          <path d="M504 112 L 536 86" stroke="#D9D0BE" stroke-width="2"/>
+          <path d="M504 140 L 536 166" stroke="#D9D0BE" stroke-width="2"/>
+        </svg>
+      </div>
+      <figcaption><strong>En pott, två gränser.</strong> Chattar du mycket med Claude under dagen har du mindre kvar till Claude Code, och tvärtom.</figcaption>
+    </figure>
+
+    <h3>Det här är bra att veta</h3>
+    <ul class="check-list">
+      <li><strong>Två gränser.</strong> Pro och Max har en gräns per femtimmarsfönster och en gräns per vecka. När femtimmarsgränsen är nådd får du vänta tills fönstret har gått.</li>
+      <li><strong>Delad pott.</strong> Gränserna gäller för Claude och Claude Code tillsammans. Allt du gör i chatten räknas också.</li>
+      <li><strong>Fable har en egen gräns på Max.</strong> Den största modellen har en separat veckogräns där, utöver den vanliga.</li>
+      <li><strong>Att byta modell hjälper inte i efterhand.</strong> Har du nått gränsen öppnas den inte igen för att du byter till en mindre modell.</li>
+    </ul>
+
+    <h3>Se var du ligger</h3>
+    <p>Skriv <code>/usage</code> i Claude Code. Där ser du hur mycket av gränserna du har använt och vad som drar mest, uppdelat på till exempel skills, subagenter och anslutna verktyg. Du får också rekommendationer. Gör det till en vana att titta innan du sätter igång något stort.</p>
+
+    <div class="callout">
+      <p class="label">När taket är nått</p>
+      <p>Du kan vänta tills gränsen återställs, köpa extra användning eller uppgradera. Kommandot <code>/rate-limit-options</code> visar vilka alternativ du har just då. Exakta siffror för gränserna står inte i dokumentationen, så lita på mätaren i <code>/usage</code> snarare än på tumregler du läser på nätet.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MODUL 03 -->
+<section class="module reveal" id="mod3">
+  <div class="container-narrow">
+    <p class="section-label">Modul 03</p>
+    <h2>Rätt modell för <em class="serif-italic">rätt jobb</em>.</h2>
+    <p class="lead">Den största modellen är inte alltid den bästa. Den är den dyraste. Det vanligaste sättet att slå i taket är att köra den tyngsta modellen på allt, också på det enkla.</p>
+
+    <p>Ett typiskt mönster: du kör en mellanstor modell hela veckan utan problem. Sedan byter du till den största för ett stort bygge, och taket är nått på en eftermiddag. Modellen gjorde inget fel. Den gjorde precis det den är bäst på, att tänka länge och grundligt, och det kostar.</p>
+
+    <figure class="fig">
+      <div class="fig-card">
+        <div class="model-ladder">
+          <div class="ml-step s1"><p class="ml-name">Haiku</p><p class="ml-alias">/model haiku</p><p class="ml-use">Enkla, snabba uppgifter. Bra för deljobb.</p></div>
+          <div class="ml-step s2"><p class="ml-name">Sonnet</p><p class="ml-alias">/model sonnet</p><p class="ml-use">Vardagskodning. Klarar det mesta.</p></div>
+          <div class="ml-step s3"><p class="ml-name">Opus</p><p class="ml-alias">/model opus</p><p class="ml-use">Svåra problem och resonemang i många steg.</p></div>
+          <div class="ml-step s4"><p class="ml-name">Fable</p><p class="ml-alias">/model fable</p><p class="ml-use">De svåraste och längsta jobben.</p></div>
+        </div>
+        <div class="ml-axis"><span>Lägre förbrukning</span><span>Högre förbrukning</span></div>
+      </div>
+      <figcaption><strong>Fyra steg på trappan.</strong> Ju högre upp, desto mer kapacitet och desto snabbare går potten åt.</figcaption>
+    </figure>
+
+    <p>Anthropics egen tumregel är att Sonnet klarar de flesta kodjobb bra och kostar mindre än Opus. Spara Opus till komplexa beslut och resonemang i flera steg. Fable är till för det allra tyngsta.</p>
+
+    <h3>Mellanvägen: opusplan</h3>
+    <p>Det finns ett läge som heter <code>opusplan</code>. Där används Opus när Claude planerar, och Sonnet när planen ska genomföras. Du får det bästa tänkandet där det gör störst skillnad, och ett billigare utförande av det som redan är bestämt.</p>
+
+    <div class="prompt-box">
+      <div class="ph"><span>Byt modell</span><button type="button" class="copy" data-target="modelText">Kopiera</button></div>
+<pre id="modelText">/model opusplan</pre>
+    </div>
+
+    <h3>Ansträngningen går också att ställa in</h3>
+    <p>De nya modellerna tänker innan de svarar, och tänkandet räknas som text Claude skriver. På en svår fråga är det värt varenda token. På en enkel fråga är det slöseri. Med <code>/effort</code> väljer du nivå, från <code>low</code> till <code>max</code>. Standard är <code>medium</code>. För enkla saker räcker <code>low</code>. Den högsta nivån ger enligt Anthropic ofta avtagande nytta och kan leda till överanalys.</p>
+
+    <table class="compare stack">
+      <thead><tr><th>Uppgift</th><th>Modell</th><th>Ansträngning</th></tr></thead>
+      <tbody>
+        <tr><td data-label="Uppgift">Byta en färg, rätta ett stavfel</td><td data-label="Modell">Sonnet eller Haiku</td><td data-label="Ansträngning">low</td></tr>
+        <tr><td data-label="Uppgift">Bygga en ny sida eller funktion</td><td data-label="Modell">Sonnet</td><td data-label="Ansträngning">medium</td></tr>
+        <tr><td data-label="Uppgift">Planera ett större bygge</td><td data-label="Modell">Opus eller opusplan</td><td data-label="Ansträngning">medium till high</td></tr>
+        <tr><td data-label="Uppgift">Ett svårt fel som inget annat löser</td><td data-label="Modell">Opus eller Fable</td><td data-label="Ansträngning">high</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout dark">
+      <p class="label">Tumregel</p>
+      <p>Börja lågt och gå upp när det behövs. Det är lättare att byta upp sig när Sonnet kör fast än att få tillbaka en pott som Fable har tömt.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MODUL 04 -->
+<section class="module alt reveal" id="mod4">
+  <div class="container-narrow">
+    <p class="section-label">Modul 04</p>
+    <h2>Håll kontexten <em class="serif-italic">ren</em>.</h2>
+    <p class="lead">Det här är vanan som gör störst skillnad, och den är lätt att lära sig. En session ska handla om en sak. När saken är klar börjar du om.</p>
+
+    <h3>Fem kommandon att kunna utantill</h3>
+    <table class="compare stack">
+      <thead><tr><th>Kommando</th><th>Vad det gör</th><th>När du använder det</th></tr></thead>
+      <tbody>
+        <tr><td data-label="Kommando"><code>/clear</code></td><td data-label="Vad det gör">Startar en ny konversation med tom kontext.</td><td data-label="När du använder det">När du går över till något som inte hänger ihop med det du gjorde. Kostar ingenting.</td></tr>
+        <tr><td data-label="Kommando"><code>/compact</code></td><td data-label="Vad det gör">Sammanfattar samtalet och frigör plats. Du kan skriva vad sammanfattningen ska fokusera på.</td><td data-label="När du använder det">När du vill fortsätta med samma sak men sessionen har blivit lång.</td></tr>
+        <tr><td data-label="Kommando"><code>/context</code></td><td data-label="Vad det gör">Visar hur full kontexten är, som ett färgat rutnät, med förslag.</td><td data-label="När du använder det">När det känns trögt eller innan du ger dig in på något stort.</td></tr>
+        <tr><td data-label="Kommando"><code>/rewind</code></td><td data-label="Vad det gör">Går tillbaka till en tidigare punkt, i samtalet och i koden. Dubbeltryck på Esc gör samma sak.</td><td data-label="När du använder det">När Claude har gått åt fel håll. Bättre än att rätta i tio meddelanden.</td></tr>
+        <tr><td data-label="Kommando"><code>/btw</code></td><td data-label="Vad det gör">Ställer en sidofråga som inte läggs till i samtalet.</td><td data-label="När du använder det">När du undrar något snabbt och inte vill att det följer med resten av sessionen.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="ba">
+      <div class="before">
+        <div class="label">Dyrt</div>
+        <code>En session hela dagen. Knappen, texten, den nya sidan och buggen i formuläret, allt i samma samtal.</code>
+      </div>
+      <div class="after">
+        <div class="label">Billigt</div>
+        <code>En session per uppgift. /clear mellan dem. Varje ny uppgift börjar lätt.</code>
+      </div>
+    </div>
+
+    <h3>Clear eller compact?</h3>
+    <p>Båda gör sessionen mindre, men på olika sätt. <code>/compact</code> läser igenom hela samtalet för att kunna sammanfatta det, och det kostar. <code>/clear</code> kastar bara bort det gamla och kostar ingenting. Vill du fortsätta på samma sak: compact. Vill du börja på något nytt: clear.</p>
+
+    <p>Du behöver inte vara rädd för att sessionen tar slut. Claude Code komprimerar automatiskt när kontexten närmar sig gränsen. Men då har du redan betalat för en lång och tung session i flera meddelanden. Det är billigare att vara före.</p>
+
+    <h3>Handoff: börja om utan att tappa något</h3>
+    <p>Det enda skälet att stanna kvar i en lång session är rädslan för att Claude ska glömma vad ni har gjort. Lösningen är att låta Claude skriva ner det innan du börjar om. Då kan du starta en ny, lätt session som ändå vet allt som är viktigt.</p>
+
+    <figure class="fig">
+      <div class="fig-card">
+        <div class="handoff">
+          <div class="ho-box heavy"><p class="ho-lab">Lång session</p><p>Tung, långsam, dyr att fortsätta i</p></div>
+          <div class="ho-arrow">→</div>
+          <div class="ho-box doc"><p class="ho-lab">Handoff</p><p>HANDOFF.md, CLAUDE.md, minnet och README uppdaterade</p></div>
+          <div class="ho-arrow">→</div>
+          <div class="ho-box light"><p class="ho-lab">Ny session</p><p>Lätt, snabb, vet ändå var ni är</p></div>
+        </div>
+      </div>
+      <figcaption><strong>Skriv ner, börja om.</strong> Kunskapen ligger i filerna, inte i samtalet. Därför kostar den ingenting att ta med.</figcaption>
+    </figure>
+
+    <div class="prompt-box">
+      <div class="ph"><span>Innan du börjar om</span><button type="button" class="copy" data-target="handoffText">Kopiera</button></div>
+<pre id="handoffText">Sessionen har blivit lång, så jag vill börja om. Innan dess:
+
+1. Skriv en HANDOFF.md med vad vi har gjort, var vi är nu och vad som är nästa steg.
+2. Spara det viktigaste i minnet.
+3. Uppdatera CLAUDE.md om något i arbetssättet har ändrats.
+4. Uppdatera README.md om projektet ligger på GitHub.
+
+Säg till när allt är sparat, så startar jag en ny session.</pre>
+    </div>
+
+    <p>I den nya sessionen räcker det att skriva: <em>"Läs HANDOFF.md och fortsätt där vi slutade."</em></p>
+  </div>
+</section>
+
+<!-- MODUL 05 -->
+<section class="module reveal" id="mod5">
+  <div class="container-narrow">
+    <p class="section-label">Modul 05</p>
+    <h2>Planera först, <em class="serif-italic">bygg</em> sedan.</h2>
+    <p class="lead">Det dyraste som finns är att bygga fel sak och få göra om den. En plan kostar några meddelanden. Ett bygge som får rivas kostar hundratals.</p>
+
+    <p>I plan-läget läser Claude dina filer, utforskar projektet och skriver en plan, men ändrar ingenting förrän du har sagt ja. Du ser vad Claude tänker göra innan något har hänt, och kan rätta en missuppfattning medan den fortfarande är billig.</p>
+
+    <figure class="fig">
+      <div class="flow">
+        <div class="flow-step"><div class="n">01</div><h4>Shift+Tab</h4><p>Tryck tills plan-läget är på, eller börja prompten med <code>/plan</code>.</p></div>
+        <div class="flow-step"><div class="n">02</div><h4>Beskriv</h4><p>Berätta vad du vill uppnå, inte hur det ska byggas.</p></div>
+        <div class="flow-step"><div class="n">03</div><h4>Läs planen</h4><p>Claude föreslår steg. Inga filer har ändrats.</p></div>
+        <div class="flow-step"><div class="n">04</div><h4>Rätta</h4><p>Säg vad som är fel. Det kostar nästan ingenting nu.</p></div>
+        <div class="flow-step last"><div class="n">05</div><h4>Godkänn</h4><p>Först nu börjar Claude bygga.</p></div>
+      </div>
+    </figure>
+
+    <figure class="fig">
+      <div class="fig-card">
+        <div class="chat">
+          <div class="msg you"><span class="who">Du</span>Jag vill att besökare ska kunna boka tid på min sida.</div>
+          <div class="msg ai"><span class="who">Claude Code · plan</span>Förslag: ett bokningsformulär på kontaktsidan, en kalender med lediga tider och ett mejl som bekräftar bokningen. Jag tänkte spara bokningarna i en databas. Ska jag gå vidare?</div>
+          <div class="msg you"><span class="who">Du</span>Ingen databas. Skicka bara ett mejl till mig, så bokar jag in det själv.</div>
+          <div class="msg ai"><span class="who">Claude Code · plan</span>Då blir det mycket enklare: ett formulär och ett mejl. Ingen kalender, ingen databas. Uppdaterad plan nedan.</div>
+        </div>
+      </div>
+      <figcaption><strong>En mening i planen sparade ett helt bygge.</strong> Utan plan-läget hade databasen och kalendern redan varit byggda när missförståndet upptäcktes.</figcaption>
+    </figure>
+
+    <h3>Skriv specifikt</h3>
+    <p>Vaga prompter gör att Claude måste leta. Letandet betyder att den läser filer, och allt den läser hamnar i samtalet. Säg var saken finns och vad du vill ha.</p>
+
+    <div class="ba">
+      <div class="before">
+        <div class="label">Vagt</div>
+        <code>Något är fel med sidan, kan du kolla?</code>
+      </div>
+      <div class="after">
+        <div class="label">Specifikt</div>
+        <code>Knappen "Boka" på kontaktsidan gör ingenting när man klickar. Felet syns i mobilen, inte på datorn.</code>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="label">Stoppa tidigt</p>
+      <p>Ser du att Claude är på väg åt fel håll, tryck på Esc direkt. Varje steg den tar i fel riktning är tokens du betalar för och sedan får betala igen för att backa.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MODUL 06 -->
+<section class="module alt reveal" id="mod6">
+  <div class="container-narrow">
+    <p class="section-label">Modul 06</p>
+    <h2>CLAUDE.md, skills och <em class="serif-italic">verktyg</em>.</h2>
+    <p class="lead">Vissa saker läses in i varje session, oavsett vad du gör. Det är där små besparingar blir stora, eftersom de upprepas hela tiden.</p>
+
+    <figure class="fig">
+      <div class="fig-card">
+        <div class="load-compare">
+          <div class="lc-col">
+            <p class="lc-lab">Laddas varje gång</p>
+            <div class="lc-item always"><b>CLAUDE.md</b><span>Hela filen, i varje session</span></div>
+            <div class="lc-item always"><b>Anslutna MCP-verktyg</b><span>Beskrivningarna tar plats även när de inte används</span></div>
+          </div>
+          <div class="lc-col">
+            <p class="lc-lab">Laddas bara när de behövs</p>
+            <div class="lc-item ondemand"><b>Skills</b><span>Läses in först när de används</span></div>
+            <div class="lc-item ondemand"><b>CLAUDE.md i undermappar</b><span>Läses när Claude jobbar i den mappen</span></div>
+          </div>
+        </div>
+      </div>
+      <figcaption><strong>Två sorters instruktioner.</strong> Det som alltid laddas ska vara kort. Det som bara behövs ibland ska ligga där det bara laddas ibland.</figcaption>
+    </figure>
+
+    <h3>Håll CLAUDE.md kort</h3>
+    <p>CLAUDE.md är projektets minne, och den är värd att ha. Kör <code>/init</code> så skapar Claude en åt dig. Men den läses i varje session, även när du gör något som inte har med innehållet att göra. Anthropic rekommenderar att varje CLAUDE.md håller sig under 200 rader. Längre filer tar mer plats och följs dessutom sämre.</p>
+
+    <h3>Flytta specialfall till skills</h3>
+    <p>Instruktioner som bara gäller ibland, som hur du publicerar, hur du gör en viss rapport eller hur du skriver nyhetsbrev, passar bättre som skills. En skill läses bara in när den behövs. Då betalar du för den bara när du faktiskt använder den.</p>
+
+    <div class="prompt-box">
+      <div class="ph"><span>Bantningskur för CLAUDE.md</span><button type="button" class="copy" data-target="slimText">Kopiera</button></div>
+<pre id="slimText">Gå igenom CLAUDE.md. Den läses i varje session, så den ska vara kort.
+
+1. Behåll bara det som gäller i nästan varje session.
+2. Föreslå vad som kan flyttas till en skill, eftersom det bara behövs ibland.
+3. Ta bort det som är inaktuellt eller upprepas.
+
+Visa förslaget innan du ändrar något. Målet är under 200 rader.</pre>
+    </div>
+
+    <h3>Stäng av verktyg du inte använder</h3>
+    <p>Varje ansluten MCP-server tar plats i kontexten, även om du inte använder den i dag. Skriv <code>/mcp</code> och stäng av de servrar som inte behövs i projektet. Finns det ett vanligt kommandoradsverktyg för samma sak, till exempel GitHubs <code>gh</code>, är det ofta lättare för Claude att använda.</p>
+  </div>
+</section>
+
+<!-- MODUL 07 -->
+<section class="module reveal" id="mod7">
+  <div class="container-narrow">
+    <p class="section-label">Modul 07</p>
+    <h2>Subagenter och <em class="serif-italic">stora jobb</em>.</h2>
+    <p class="lead">Subagenter är medhjälpare som Claude skickar iväg på deluppdrag. De kan spara plats i ditt samtal, men de är inte gratis. Det gäller att veta när de lönar sig.</p>
+
+    <figure class="fig">
+      <div class="fig-card">
+        <svg viewBox="0 0 720 260" role="img" aria-label="Diagram: huvudsamtalet skickar ett deluppdrag till en subagent med egen kontext. Bara en kort sammanfattning kommer tillbaka, men subagentens tokens dras från samma pott.">
+          <rect x="20" y="70" width="220" height="120" rx="16" fill="#FBF8F1" stroke="#D9D0BE"/>
+          <text x="130" y="100" text-anchor="middle" class="svg-lab" fill="#A25B2A">DITT SAMTAL</text>
+          <rect x="44" y="116" width="172" height="12" rx="6" fill="#E69068"/>
+          <rect x="44" y="138" width="120" height="12" rx="6" fill="#E69068"/>
+          <rect x="44" y="160" width="60" height="12" rx="6" fill="#C66A2E"/>
+          <text x="112" y="170" class="svg-txt" fill="#6B5F52">kort svar</text>
+          <rect x="440" y="40" width="260" height="180" rx="16" fill="#1A1713"/>
+          <text x="570" y="70" text-anchor="middle" class="svg-lab" fill="#E69068">SUBAGENT, EGEN KONTEXT</text>
+          <rect x="464" y="88" width="212" height="10" rx="5" fill="#6B5F52"/>
+          <rect x="464" y="106" width="190" height="10" rx="5" fill="#6B5F52"/>
+          <rect x="464" y="124" width="212" height="10" rx="5" fill="#6B5F52"/>
+          <rect x="464" y="142" width="160" height="10" rx="5" fill="#6B5F52"/>
+          <rect x="464" y="160" width="200" height="10" rx="5" fill="#6B5F52"/>
+          <text x="570" y="200" text-anchor="middle" class="svg-txt" fill="#B8AD9E">läser filer, söker, testar</text>
+          <path d="M244 100 C 330 60, 360 60, 436 80" fill="none" stroke="#C66A2E" stroke-width="3"/>
+          <text x="340" y="56" text-anchor="middle" class="svg-txt" fill="#3D362E">deluppdrag</text>
+          <path d="M436 190 C 360 220, 320 220, 244 166" fill="none" stroke="#C66A2E" stroke-width="3" stroke-dasharray="6 6"/>
+          <text x="340" y="236" text-anchor="middle" class="svg-txt" fill="#3D362E">bara sammanfattningen kommer tillbaka</text>
+        </svg>
+      </div>
+      <figcaption><strong>Rent samtal, men samma pott.</strong> Allt subagenten läser stannar hos den, så ditt samtal förblir litet. Men det den läser räknas ändå mot dina gränser.</figcaption>
+    </figure>
+
+    <h3>När subagenter lönar sig</h3>
+    <ul class="check-list">
+      <li><strong>När ett jobb ger mycket brus.</strong> Att söka igenom ett stort projekt, köra tester eller läsa långa loggar. Subagenten tar smällen, och du får bara slutsatsen.</li>
+      <li><strong>När deljobbet är enkelt.</strong> Då kan subagenten köras på Haiku i stället för på din stora modell. Be om det uttryckligen.</li>
+    </ul>
+
+    <h3>När de inte gör det</h3>
+    <ul class="check-list">
+      <li><strong>När uppgiften är liten.</strong> En subagent startar från noll och måste läsa in sig. För en liten sak är det dyrare än att göra den direkt.</li>
+      <li><strong>Många samtidigt.</strong> Varje subagent förbrukar egna tokens. Tio parallella medhjälpare är tio förbrukare. Anthropic uppger att hela agentteam kan använda ungefär sju gånger fler tokens än en vanlig session.</li>
+    </ul>
+
+    <h3>Dela upp de stora jobben</h3>
+    <p>Ett stort bygge i en enda jättesession är det säkraste sättet att slå i taket mitt i allt. Dela upp det i steg som går att avsluta, med en handoff mellan varje. Då kan du ta en paus när potten är slut och fortsätta nästa dag utan att något är förlorat.</p>
+
+    <div class="prompt-box">
+      <div class="ph"><span>Stort jobb i steg</span><button type="button" class="copy" data-target="stepsText">Kopiera</button></div>
+<pre id="stepsText">Det här är ett stort jobb. Dela upp det i steg som var för sig går att göra klart i en session.
+
+Skriv stegen i en PLAN.md. För varje steg: vad som ska vara klart efteråt och hur vi kontrollerar det.
+
+Börja bara med steg 1. När det är klart: uppdatera PLAN.md och HANDOFF.md, så att jag kan fortsätta med nästa steg i en ny session.</pre>
+    </div>
+
+    <div class="callout dark">
+      <p class="label">Sammanfattning av hela kursen</p>
+      <p>En sak per session. Rätt modell för jobbet. Planera innan du bygger. Skriv ner innan du börjar om. Kort CLAUDE.md, specialfall i skills. Subagenter för brus, inte för småsaker. Titta på <code>/usage</code> innan något stort.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="quiz-section reveal" id="quiz">
+  <div class="container-narrow">
+    <p class="section-label">Quiz</p>
+    <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(32px,4vw,40px); line-height:1.15; margin:0 0 14px;">Tre frågor som testar det <em class="serif-italic">viktigaste</em>.</h2>
+    <p class="lead">Svara intuitivt. Inga poäng dras vid fel, du ser bara hur det ligger till.</p>
+
+    <div class="quiz">
+      <div class="qq" data-q="1" data-correct="1">
+        <div class="qq-num">FRÅGA 01</div>
+        <h3>Varför kostar en kort fråga mer sent på dagen än på morgonen, i samma session?</h3>
+        <div class="qopts">
+          <button class="qopt" data-i="0">Modellen blir trött och tänker längre</button>
+          <button class="qopt" data-i="1">Hela samtalet skickas med varje gång, och det har vuxit</button>
+          <button class="qopt" data-i="2">Priset per token är högre på eftermiddagen</button>
+          <button class="qopt" data-i="3">Den kostar inte mer, det är bara en känsla</button>
+        </div>
+        <div class="qfeedback">Rätt. Claude minns inget mellan meddelanden, så allt som redan har sagts följer med din nya fråga.</div>
+      </div>
+
+      <div class="qq" data-q="2" data-correct="3">
+        <div class="qq-num">FRÅGA 02</div>
+        <h3>Du är klar med en uppgift och ska börja på något helt annat. Vad gör du?</h3>
+        <div class="qopts">
+          <button class="qopt" data-i="0">Fortsätter i samma session, så att Claude har allt i minnet</button>
+          <button class="qopt" data-i="1">Byter till den största modellen</button>
+          <button class="qopt" data-i="2">Kör /compact, så att sessionen blir mindre</button>
+          <button class="qopt" data-i="3">Låter Claude spara det viktiga i en handoff och kör /clear</button>
+        </div>
+        <div class="qfeedback">Rätt. /clear kostar ingenting, och det viktiga ligger kvar i filerna. /compact passar när du vill fortsätta med samma sak.</div>
+      </div>
+
+      <div class="qq" data-q="3" data-correct="0">
+        <div class="qq-num">FRÅGA 03</div>
+        <h3>Vad är den mest sparsamma vägen till ett stort nytt bygge?</h3>
+        <div class="qopts">
+          <button class="qopt" data-i="0">Planera i plan-läget, rätta planen och bygg sedan i steg</button>
+          <button class="qopt" data-i="1">Låt tio subagenter jobba parallellt från början</button>
+          <button class="qopt" data-i="2">Kör Fable på hög ansträngning hela vägen</button>
+          <button class="qopt" data-i="3">Skriv en kort prompt och låt Claude lista ut resten</button>
+        </div>
+        <div class="qfeedback">Rätt. En plan kostar lite, ett bygge som får göras om kostar mycket, och steg gör att du kan pausa utan att tappa något.</div>
+      </div>
+
+      <div class="quiz-score" id="quizScore">
+        <p class="num"><span id="scoreNum">0</span> av 3</p>
+        <p id="scoreText">Bra jobbat. Du har koll på principerna.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- END SECTION -->
+<section class="end">
+  <div class="container-narrow">
+    <p class="section-label">Klar</p>
+    <h2>Bra jobbat. Du tog dig igenom hela <em class="serif-italic">mini-kursen</em>.</h2>
+    <p class="lead">Nu vet du varför potten tar slut och vad du kan göra åt det. Börja med en enda vana i morgon: en sak per session, och /clear när saken är klar.</p>
+
+    <div class="next-steps">
+      <p class="section-label">Gå vidare</p>
+      <h3>När du vill bygga <em class="serif-italic">på riktigt</em></h3>
+      <p class="intro">Två steg till för dig som fått smak på det. Boken ger dig hela landskapet, Startkitet tar dig hands-on i Claude Code.</p>
+      <div class="offer-grid">
+        <div class="offer">
+          <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></div>
+          <p class="kicker">Boken · 99 kr</p>
+          <h4>Vibe coding, hela landskapet</h4>
+          <p>Första boken om vibe coding på svenska. Den kompletta guiden till att bygga webbappar, AI-verktyg och produkter med AI, från idé till live, utan traditionell programmering. PDF med gratis framtida uppdateringar.</p>
+          <a href="https://vibecodingsverige.se/boken" class="btn btn-amber" target="_blank" rel="noopener">Till boken</a>
+        </div>
+        <div class="offer warm">
+          <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
+          <p class="kicker">Betald kurs · 199 kr</p>
+          <h4>Vibe Coding Startkit</h4>
+          <p>Bygg riktiga webbappar med Claude Code, utan att kunna koda. 9 kapitel, 50 färdiga prompts och 4 checklistor som tar dig hela vägen från första prompten till en webbapp på riktigt. Engångsbetalning, livstidstillgång med alla framtida uppdateringar.</p>
+          <a href="https://vibe-coding-startkit.birgir.se/" class="btn btn-amber" target="_blank" rel="noopener">Öppna startkitet</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-card">
+      <div class="eyebrow">Veckobrev</div>
+      <h3>Vill du tänka mer kring Claude Code, AI och <em class="serif-italic">vibe coding</em>?</h3>
+      <p class="desc">Kort, lågmält, på svenska. Ett mejl i veckan med tre sektioner som matchar tonen i den här kursen.</p>
+      <ul class="check-list">
+        <li>En personlig reflektion om AI och om att vara människa samtidigt</li>
+        <li>En konkret AI-insikt, ofta något testat i veckan i Claude Code</li>
+        <li>En 10-minuters mikroövning du kan göra direkt</li>
+      </ul>
+      <a href="https://veckobrev.birgir.se/" class="btn btn-amber">Prenumerera på veckobrevet</a>
+      <p class="micro">Under 5 minuters läsning. Inga skräpmejl. Du kan när som helst avregistrera dig.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">© 2026 Birgir Birgisson</div>
+</footer>
+
+<script>
+  // Progress bar
+  function updateProgress() {
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+    document.getElementById('progressBar').style.width = progress + '%';
+  }
+  window.addEventListener('scroll', updateProgress);
+  updateProgress();
+
+  // Reveal on scroll
+  var revealEls = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -10% 0px' });
+  revealEls.forEach(function(el) { io.observe(el); });
+
+  // Active module nav
+  var navLinks = document.querySelectorAll('.module-nav a');
+  var sections = Array.from(navLinks).map(function(a) {
+    var id = a.getAttribute('href').replace('#', '');
+    return document.getElementById(id);
+  }).filter(Boolean);
+  var navIo = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      var id = entry.target.id;
+      var link = document.querySelector('.module-nav a[href="#' + id + '"]');
+      if (!link) return;
+      if (entry.isIntersecting) {
+        navLinks.forEach(function(a) { a.classList.remove('active'); });
+        link.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(function(s) { navIo.observe(s); });
+
+  // Quiz logic
+  var quizState = { 1: null, 2: null, 3: null };
+
+  document.querySelectorAll('.qq').forEach(function(qq) {
+    var qNum = parseInt(qq.dataset.q, 10);
+    var correct = parseInt(qq.dataset.correct, 10);
+    var opts = qq.querySelectorAll('.qopt');
+    var feedback = qq.querySelector('.qfeedback');
+
+    opts.forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (quizState[qNum] !== null) return;
+        var i = parseInt(opt.dataset.i, 10);
+        quizState[qNum] = (i === correct);
+        opts.forEach(function(o) {
+          o.disabled = true;
+          var oi = parseInt(o.dataset.i, 10);
+          if (oi === correct) o.classList.add('correct');
+          else if (oi === i) o.classList.add('wrong');
+        });
+        feedback.classList.add('show');
+        checkScore();
+      });
+    });
+  });
+
+  function checkScore() {
+    var answered = Object.values(quizState).filter(function(v) { return v !== null; }).length;
+    if (answered < 3) return;
+    var correct = Object.values(quizState).filter(function(v) { return v === true; }).length;
+    var scoreEl = document.getElementById('quizScore');
+    document.getElementById('scoreNum').textContent = correct;
+    var msg;
+    if (correct === 3) msg = 'Full pott. Du har koll på allt det viktigaste.';
+    else if (correct === 2) msg = 'Bra. En liten detalj kvar att finslipa.';
+    else if (correct === 1) msg = 'Okej start. Skumma igenom modulerna en gång till.';
+    else msg = 'Inga problem. Det är därför du gick kursen. Läs gärna om modul 03 och 04.';
+    document.getElementById('scoreText').textContent = msg;
+    scoreEl.classList.add('show');
+    scoreEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // Kopieringsknappar
+  document.querySelectorAll('.prompt-box button.copy').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var t = document.getElementById(btn.dataset.target).textContent;
+      navigator.clipboard.writeText(t).then(function() {
+        btn.textContent = 'Kopierad';
+        setTimeout(function() { btn.textContent = 'Kopiera'; }, 1800);
+      });
+    });
+  });
+</script>
+</body>
+</html>

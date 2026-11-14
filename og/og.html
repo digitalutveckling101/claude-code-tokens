@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Source+Serif+4:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    background: #F5EFE2; color: #1A1713; font-family: Inter, sans-serif;
+    display: grid; grid-template-columns: 1fr 430px; gap: 56px; align-items: center;
+    padding: 0 72px; position: relative;
+  }
+  body::before { content: ""; position: absolute; left: 0; top: 0; right: 0; height: 10px; background: linear-gradient(90deg, #C66A2E, #A25B2A); }
+  .badge {
+    display: inline-block; font-family: "JetBrains Mono", monospace; font-size: 17px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; color: #A25B2A;
+    background: #FBEEE1; border: 1px solid #F5D7BF; border-radius: 999px; padding: 9px 18px; margin-bottom: 30px;
+  }
+  h1 { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 84px; line-height: 1.02; letter-spacing: -0.015em; }
+  h1 em { font-style: italic; color: #A25B2A; }
+  .sub { font-size: 25px; line-height: 1.4; color: #3D362E; margin-top: 26px; max-width: 560px; }
+  .meta { margin-top: 30px; font-family: "JetBrains Mono", monospace; font-size: 17px; color: #6B5F52; letter-spacing: 0.06em; }
+  .meta b { color: #C66A2E; font-weight: 600; }
+  .card { background: #1A1713; color: #F5EFE2; border-radius: 28px; padding: 38px 36px; box-shadow: 0 30px 70px rgba(26,23,19,.22); }
+  .t { font-family: "JetBrains Mono", monospace; font-size: 15px; letter-spacing: .14em; text-transform: uppercase; color: #E69068; margin-bottom: 26px; }
+  .row { display: flex; justify-content: space-between; font-size: 19px; color: #B8AD9E; margin-bottom: 9px; }
+  .row span:last-child { font-family: "JetBrains Mono", monospace; color: #F5EFE2; }
+  .bar { height: 15px; border-radius: 8px; background: #3D362E; overflow: hidden; margin-bottom: 26px; }
+  .bar i { display: block; height: 100%; border-radius: 8px; background: linear-gradient(90deg, #D97742, #C66A2E); }
+  .bar i.c { background: #E69068; opacity: .75; }
+  .cmds { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+  .cmds span { font-family: "JetBrains Mono", monospace; font-size: 18px; background: #2A2520; border: 1px solid #3D362E; border-radius: 10px; padding: 9px 14px; color: #F5EFE2; }
+  .cmds span b { color: #E69068; font-weight: 600; }
+</style>
+</head>
+<body>
+  <div>
+    <span class="badge">Gratis mini-kurs</span>
+    <h1>Få tokens att <em>räcka</em> i Claude Code</h1>
+    <p class="sub">Gör mer innan du slår i taket. Sju vanor som gör skillnad.</p>
+    <p class="meta"><b>7</b> moduler &nbsp;·&nbsp; <b>~25</b> min &nbsp;·&nbsp; ingen e-post</p>
+  </div>
+  <div class="card">
+    <p class="t">Användning</p>
+    <div class="row"><span>Femtimmarsfönster</span><span>34 %</span></div>
+    <div class="bar"><i style="width:34%"></i></div>
+    <div class="row"><span>Veckogräns</span><span>21 %</span></div>
+    <div class="bar"><i class="c" style="width:21%"></i></div>
+    <div class="cmds"><span><b>/</b>clear</span><span><b>/</b>model</span><span><b>/</b>usage</span></div>
+  </div>
+</body>
+</html>
