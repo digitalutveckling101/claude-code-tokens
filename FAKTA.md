@@ -73,3 +73,11 @@ Källor:
 ## Ultra (tillagt 2026-11-14)
 - Verifierade Ultra-konton har ingen femtimmarsgräns, bara en veckogräns. (support.claude.com, artikel 11145838, och claude.com/pricing)
 - Pro och Max har fortfarande både femtimmarsgräns och veckogräns.
+
+## Rådgivaren /advisor (tillagt 2026-11-14)
+Källa: https://code.claude.com/docs/en/advisor.md och commands.md
+- `/advisor [model|off]` slår på en rådgivare, en andra och oftast starkare modell som Claude själv frågar vid viktiga lägen (före ett vägval, vid återkommande fel, innan något förklaras klart). Accepterar fable, opus, sonnet eller ett fullt modell-ID.
+- Rådgivaren måste vara minst lika stark som huvudmodellen.
+- Rådgivaren läser hela samtalet vid varje anrop. Förbrukningen räknas mot plangränserna. En Fable-rådgivare debiteras som användningskrediter på abonnemang där Fable gör det.
+- Dokumentationen: en snabbare huvudmodell med en starkare rådgivare kostar oftast mindre än att köra den starkare modellen hela tiden.
+- Experimentell. Kräver Anthropic API eller Claude Platform on AWS. Stäng av med `/advisor off`.

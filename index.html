@@ -1187,6 +1187,17 @@
 <pre id="modelText">/model opusplan</pre>
     </div>
 
+    <h3>Rådgivaren: /advisor</h3>
+    <p>Ett annat sätt att få det bästa av två modeller är rådgivaren. Du kör en snabbare modell, till exempel Sonnet, och väljer en starkare som rådgivare. Claude bestämmer själv när det är dags att fråga: innan ett vägval, när samma fel kommer tillbaka eller innan något förklaras färdigt. Rådgivaren läser då hela samtalet och ger råd, och sedan fortsätter den snabbare modellen arbetet.</p>
+    <p>Rådgivaren är inte gratis. Varje gång den tillfrågas läser den hela samtalet, och det räknas mot dina gränser. Men enligt Anthropic blir en snabbare huvudmodell med en starkare rådgivare oftast billigare än att köra den starka modellen hela tiden. Funktionen är ännu experimentell. Väljer du Fable som rådgivare kan det på vissa abonnemang dras från extra användning i stället för från potten.</p>
+
+    <div class="prompt-box">
+      <div class="ph"><span>Sonnet med Opus som rådgivare</span><button type="button" class="copy" data-target="advisorText">Kopiera</button></div>
+<pre id="advisorText">/model sonnet
+/advisor opus</pre>
+    </div>
+    <p>Stäng av rådgivaren med <code>/advisor off</code>.</p>
+
     <h3>Ansträngningen går också att ställa in</h3>
     <p>De nya modellerna tänker innan de svarar, och tänkandet räknas som text Claude skriver. På en svår fråga är det värt varenda token. På en enkel fråga är det slöseri. Med <code>/effort</code> väljer du nivå, från <code>low</code> till <code>max</code>. Standard är <code>medium</code>. För enkla saker räcker <code>low</code>. Den högsta nivån ger enligt Anthropic ofta avtagande nytta och kan leda till överanalys.</p>
 
