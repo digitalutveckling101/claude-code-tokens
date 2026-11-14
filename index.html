@@ -962,6 +962,34 @@
     .fig-card:has(> svg) { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     .fig-card > svg { min-width: 600px; }
   }
+
+  /* Fler minikurser: länk till katalogen, sist i .end */
+  .fk-wrap { max-width: 760px; margin: 48px auto 0; padding: 0 22px; }
+  .fk {
+    display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+    border: 1px solid rgba(230,144,104,0.45); border-radius: var(--r-xl, 24px);
+    padding: 26px 28px; text-align: left;
+  }
+  .fk p.fk-label {
+    font-family: var(--mono, "JetBrains Mono", ui-monospace, monospace);
+    font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--amber-400, #E69068); margin: 0 0 8px;
+  }
+  .fk h3.fk-title {
+    font-family: var(--serif, "Source Serif 4", Georgia, serif);
+    font-weight: 600; font-size: clamp(21px, 2.6vw, 25px); line-height: 1.25;
+    color: var(--cream-100, #F5EFE2); margin: 0 0 6px;
+  }
+  .fk h3.fk-title em { font-style: italic; color: var(--amber-400, #E69068); }
+  .fk p.fk-desc { font-size: 15px; line-height: 1.55; color: var(--ink-300, #B8AD9E); margin: 0; max-width: 440px; }
+  .fk a.fk-btn {
+    display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0;
+    font-family: var(--sans, Inter, system-ui, sans-serif); font-weight: 600; font-size: 15px;
+    color: var(--cream-100, #F5EFE2); text-decoration: none;
+    border: 1px solid var(--cream-100, #F5EFE2); border-radius: 10px; padding: 12px 20px;
+    transition: background .15s ease, color .15s ease;
+  }
+  .fk a.fk-btn:hover { background: var(--cream-100, #F5EFE2); color: var(--ink-900, #1A1713); }
 </style>
 </head>
 
@@ -1500,6 +1528,17 @@ Börja bara med steg 1. När det är klart: uppdatera PLAN.md och HANDOFF.md, s�
       </ul>
       <a href="https://veckobrev.birgir.se/" class="btn btn-amber">Prenumerera på veckobrevet</a>
       <p class="micro">Under 5 minuters läsning. Inga skräpmejl. Du kan när som helst avregistrera dig.</p>
+    </div>
+  </div>
+
+  <div class="fk-wrap">
+    <div class="fk">
+      <div>
+        <p class="fk-label">Fler minikurser</p>
+        <h3 class="fk-title">Vill du lära dig <em>mer</em>?</h3>
+        <p class="fk-desc">Det finns fler korta, gratis kurser om AI på svenska. Claude Code, Cowork, Codex, bilder och mycket mer.</p>
+      </div>
+      <a class="fk-btn" href="https://vibecodingsverige.se/kurser" target="_blank" rel="noopener">Se alla kurser &rarr;</a>
     </div>
   </div>
 </section>
